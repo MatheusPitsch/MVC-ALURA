@@ -25,9 +25,10 @@ namespace CasaDoCodigo
         {
             services.AddMvc();
          
-            string connectionString = Configuration.GetConnectionString(default);
+            string connectionString = Configuration.GetConnectionString("Default");
+
             services.AddDbContext<ApplicationContext>(options =>
-            options.UseSqlServer(connectionString)
+                options.UseSqlServer(connectionString)
             );
         }
 
@@ -44,7 +45,7 @@ namespace CasaDoCodigo
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles();            
 
             app.UseMvc(routes =>
             {
