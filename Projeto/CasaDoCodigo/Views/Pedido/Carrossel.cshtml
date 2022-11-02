@@ -1,20 +1,23 @@
 ﻿@model List<Produto>
 <h3>Catálogo</h3>
-@foreach (var produtos in Model)
-{
-    <div>
-        @produtos.Nome
-    </div>
-}
 
 <div id="my-carousel" class="carousel slide" data-ride="carousel">
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-        <div class="item active">
+     
+        @{ 
+            const int TAMANHO_PAG = 4;
+
+            int paginas = (int)Math.Ceiling((double)Model.Count / TAMANHO_PAG);
+        }
+
+        @for (int i = 0; i < paginas; i++)
+        {
+        <div class="item @(i == 0 ? "active" : "")">
             <div class="row">
 
                 @{ 
-                    var produtosDaPagina = Model.Take(4);
+                    var produtosDaPagina = Model.Skip(i * TAMANHO_PAG).Take(TAMANHO_PAG);
                 }
 
                 @foreach (var produto in produtosDaPagina)
@@ -36,6 +39,8 @@
                 }
             </div>
         </div>
+        }
+
     </div>
     <!-- Controls -->
     <a class="left carousel-control" href="#my-carousel" role="button" data-slide="prev">
