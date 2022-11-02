@@ -1,5 +1,6 @@
 ﻿using CasaDoCodigo.Models;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Linq;
 
 namespace CasaDoCodigo.Repositorys
@@ -13,6 +14,33 @@ namespace CasaDoCodigo.Repositorys
             this.contextAccessor = contextAccessor;
         }
 
+        public void AddItem(string code)
+        {
+            var produto = context.Set<Produto>()
+                            .Where(p => p.Codigo == code)
+                            .SingleOrDefault();
+
+            if (produto == null)
+            {
+                throw new ArgumentException("Produto não encontrado");
+            }
+
+            var pedido = GetPedido();
+
+            var itemPedido = context.Set<ItemPedido>()
+                .Where(i => i.Produto.Codigo == code
+                && i.Produto.Id == pedido.Id)
+                .SingleOrDefault();
+
+            if (itemPedido == null)
+            {
+                itemPedido = new ItemPedido(pedido, produto, 1, produto.Preco);
+                context.Set<ItemPedido>().Add(itemPedido);
+
+                context.SaveChanges();
+            }
+        }
+
         public Pedido GetPedido()
         {
             var pedidoId = GetPedidoId();
@@ -23,6 +51,7 @@ namespace CasaDoCodigo.Repositorys
                 pedido = new Pedido();
                 dbSet.Add(pedido);
                 context.SaveChanges();
+                SetPedidoId(pedido.Id);
             }
 
             return pedido;
