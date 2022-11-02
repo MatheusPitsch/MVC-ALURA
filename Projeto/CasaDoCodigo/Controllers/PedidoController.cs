@@ -4,9 +4,9 @@ namespace CasaDoCodigo.Controllers
 {
     public class PedidoController : Controller
     {
-        private readonly IRepository repository;
+        private readonly IProdutoRepository repository;
 
-        public PedidoController(IRepository repository)
+        public PedidoController(IProdutoRepository repository)
         {
             this.repository = repository;
         }

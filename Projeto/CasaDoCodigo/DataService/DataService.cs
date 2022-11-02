@@ -9,9 +9,9 @@ namespace CasaDoCodigo
     class DataService : IDataService
     {
         private readonly ApplicationContext context;
-        private readonly IRepository repository;
+        private readonly IProdutoRepository repository;
 
-        public DataService(ApplicationContext context, IRepository repository)
+        public DataService(ApplicationContext context, IProdutoRepository repository)
         {
             this.context = context;
             this.repository = repository;
