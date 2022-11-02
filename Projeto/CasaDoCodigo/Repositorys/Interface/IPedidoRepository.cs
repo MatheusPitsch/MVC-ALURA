@@ -1,4 +1,9 @@
-﻿namespace CasaDoCodigo.Repositorys
+﻿using CasaDoCodigo.Models;
+
+namespace CasaDoCodigo.Repositorys
 {
-    public interface IPedidoRepository { }
+    public interface IPedidoRepository
+    {
+        Pedido GetPedido();
+    }
 }
