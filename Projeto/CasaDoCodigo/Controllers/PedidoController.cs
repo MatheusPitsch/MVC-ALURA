@@ -1,4 +1,5 @@
-﻿using CasaDoCodigo.Repositorys;
+﻿using CasaDoCodigo.Models;
+using CasaDoCodigo.Repositorys;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CasaDoCodigo.Controllers
@@ -37,7 +38,9 @@ namespace CasaDoCodigo.Controllers
 
         public IActionResult Resumo()
         {
-            return View();
+            Pedido pedido = _pedidoRepository.GetPedido();
+
+            return View(pedido);
         }
 
     }
